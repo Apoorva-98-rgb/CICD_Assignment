@@ -1,7 +1,12 @@
 name: Build and push docker image
 on:
   pull_request:
-    types: [opened, synchronize] 
+    branches: [ "main" ]
+    paths-ignore:
+      - 'data/**'
+      - 'requirements.txt'
+      - 'README.md'
+
 
 jobs:
   build_and_push:
