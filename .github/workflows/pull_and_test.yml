@@ -1,0 +1,25 @@
+name: Pull and Test Docker Image
+
+on:
+  pull_request:
+    types: [opened, synchronize]  # Trigger on pull request open and update events
+
+jobs:
+  pull_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Pull Docker image
+        run: |
+          docker pull apoosdhamne/TrainedModelImage:latest
+        
+      - name: Run Docker container and test
+        run: |
+          OUTPUT=$(docker run apoosdhamne/TrainedModelImage:latest python test.py)
+          echo "Score: $OUTPUT"
+          if (( $(echo "$OUTPUT > 0.50" | bc -l) )); then
+            echo "Test passed - Score is above 0.50"
+          else
+            echo "Test failed - Score is below or equal to 0.50"
+            exit 1
+          fi
