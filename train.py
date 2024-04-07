@@ -11,7 +11,6 @@ labels = np.sort(np.unique(y))
 y = np.array([np.where(labels == x) for x in y]).flatten()
 
 #model = LogisticRegression(random_state=42).fit(X, y)
-model = GaussianNB().fit(X,y)
-
+model = GaussianNB().fit(X,y)dadscgi
 with open("model.pkl", 'wb') as f:
     pickle.dump(model, f)
